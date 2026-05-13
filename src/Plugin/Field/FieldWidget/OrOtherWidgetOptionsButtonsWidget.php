@@ -103,7 +103,7 @@ class OrOtherWidgetOptionsButtonsWidget extends OrOtherWidget implements Trusted
       }
       // Add our custom validator.
       $element['#element_validate'][] = [
-        get_class($this), 'validateMultipleElement',
+        static::class, 'validateMultipleElement',
       ];
     }
     else {
@@ -143,7 +143,7 @@ class OrOtherWidgetOptionsButtonsWidget extends OrOtherWidget implements Trusted
         }
       }
       // Add our custom validator.
-      $element['#element_validate'][] = [get_class($this), 'validateElement'];
+      $element['#element_validate'][] = [static::class, 'validateElement'];
     }
     return $element;
   }
@@ -234,6 +234,7 @@ class OrOtherWidgetOptionsButtonsWidget extends OrOtherWidget implements Trusted
       $selected_options = [];
       $full_value = $items[0]->value ?? '';
       foreach ($flat_options as $id => $option_value) {
+        $option_value = (string) $option_value;
         if ($full_value === $option_value) {
           $selected_options[$id]['value'] = $option_value;
         }

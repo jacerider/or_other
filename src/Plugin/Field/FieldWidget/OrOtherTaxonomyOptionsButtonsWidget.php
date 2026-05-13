@@ -97,7 +97,7 @@ class OrOtherTaxonomyOptionsButtonsWidget extends OrOtherTaxonomyWidget implemen
       }
       // Add our custom validator.
       $element['#element_validate'][] = [
-        get_class($this), 'validateMultipleElement',
+        static::class, 'validateMultipleElement',
       ];
     }
     else {
@@ -137,7 +137,7 @@ class OrOtherTaxonomyOptionsButtonsWidget extends OrOtherTaxonomyWidget implemen
         }
       }
       // Add our custom validator.
-      $element['#element_validate'][] = [get_class($this), 'validateElement'];
+      $element['#element_validate'][] = [static::class, 'validateElement'];
     }
 
     return $element;
@@ -201,8 +201,9 @@ class OrOtherTaxonomyOptionsButtonsWidget extends OrOtherTaxonomyWidget implemen
     if ($this->multiple) {
       $selected_options = [];
       foreach ($items as $item) {
-        $full_value = $item->value;
+        $full_value = $item->value ?? '';
         foreach ($flat_options as $tid => $option_value) {
+          $option_value = (string) $option_value;
           $value = substr($full_value, 0, strlen($option_value));
           $other_value = substr($full_value, strlen($value . self::$delimiter));
           if ($full_value === $option_value || $value . self::$delimiter . $other_value === $full_value) {
@@ -213,7 +214,7 @@ class OrOtherTaxonomyOptionsButtonsWidget extends OrOtherTaxonomyWidget implemen
       }
     }
     else {
-      $value = isset($items[0]->value) ? $items[0]->value : '';
+      $value = $items[0]->value ?? '';
       $other = '';
       if (!empty($value) && !isset($flat_options[$value])) {
         $other = $value;

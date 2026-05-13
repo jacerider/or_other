@@ -6,7 +6,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 
 /**
@@ -29,12 +28,6 @@ class OrOtherTaxonomyWidget extends OrOtherWidgetBase implements ContainerFactor
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\Core\Entity\EntityRepositoryInterface $entityRepository
-   *   The entity repository service used for retrieving entities.
-   */
-  protected $entityRepository;
-
-  /**
    * The vocabulary options for the OrOtherTaxonomyWidget class.
    *
    * @var array
@@ -50,10 +43,9 @@ class OrOtherTaxonomyWidget extends OrOtherWidgetBase implements ContainerFactor
   /**
    * {@inheritdoc}
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, EntityTypeManagerInterface $entity_type_manager, EntityRepositoryInterface $entity_repository) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
     $this->entityTypeManager = $entity_type_manager;
-    $this->entityRepository = $entity_repository;
   }
 
   /**
@@ -66,8 +58,7 @@ class OrOtherTaxonomyWidget extends OrOtherWidgetBase implements ContainerFactor
       $configuration['field_definition'],
       $configuration['settings'],
       $configuration['third_party_settings'],
-      $container->get('entity_type.manager'),
-      $container->get('entity.repository')
+      $container->get('entity_type.manager')
     );
   }
 

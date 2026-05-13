@@ -92,7 +92,7 @@ abstract class OrOtherWidgetBase extends WidgetBase {
         '#default_value' => $this->getSetting('other_triggers'),
         '#options' => $options,
         '#element_validate' => [
-          [get_class($this), 'otherTriggersValidate'],
+          [static::class, 'otherTriggersValidate'],
         ],
       ];
     }
@@ -144,7 +144,7 @@ abstract class OrOtherWidgetBase extends WidgetBase {
       '#placeholder' => $this->getSetting('placeholder'),
       '#attributes' => ['class' => ['js-text-full', 'text-full']],
       '#element_validate' => [
-        [get_class($this), 'validateOther'],
+        [static::class, 'validateOther'],
       ],
       '#or_other_options' => $other_triggers,
       '#access' => !empty($other_triggers),
